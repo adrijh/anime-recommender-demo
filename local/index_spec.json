@@ -1,0 +1,82 @@
+{
+    "settings": {
+        "default_pipeline": "placeholder_pipeline_name",
+        "index": {
+            "knn": true,
+            "number_of_shards": 1,
+            "auto_expand_replicas": "0-all"
+        }
+    },
+    "mappings": {
+        "properties": {
+            "anime_id": {
+                "type": "keyword",
+                "store": true
+            },
+            "title": {
+                "type": "text",
+                "store": true,
+                "analyzer": "english",
+                "similarity": "BM25"
+            },
+            "title_en": {
+                "type": "text",
+                "store": true,
+                "analyzer": "english",
+                "similarity": "BM25"
+            },
+            "main_picture": {
+                "type": "text",
+                "store": true,
+                "analyzer": "whitespace",
+                "fielddata": true
+            },
+            "start_date": {
+                "type": "date",
+                "store": true,
+                "format": "dateOptionalTime"
+            },
+            "end_date": {
+                "type": "date",
+                "store": true,
+                "format": "dateOptionalTime"
+            },
+            "synopsis": {
+                "type": "text",
+                "store": true,
+                "analyzer": "english",
+                "similarity": "BM25"
+            },
+            "synopsis_embedding": {
+                "type": "knn_vector",
+                "dimension": 768,
+                "method": {
+                    "engine": "faiss",
+                    "space_type": "innerproduct",
+                    "name": "hnsw",
+                    "parameters": {}
+                }
+            },
+            "mean": {
+                "type": "float",
+                "store": true
+            },
+            "rank": {
+                "type": "integer",
+                "store": true
+            },
+            "popularity": {
+                "type": "integer",
+                "store": true
+            },
+            "num_list_users": {
+                "type": "integer",
+                "store": true
+            },
+            "num_scoring_users": {
+                "type": "integer",
+                "store": true
+            }
+        }
+    }
+}

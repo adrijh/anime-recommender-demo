@@ -1,0 +1,57 @@
+GET anime/_search
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+# Basic Neural Query
+GET /anime_v1/_search
+{
+  "_source": {
+    "excludes": [
+      "synopsis_embedding"
+    ],
+    "includes": ["title", "title_en"]
+  },
+  "query": {
+    "neural": {
+      "synopsis_embedding": {
+        "query_text": "Main character starts weak and gets stronger",
+        "k": 10
+      }
+    }
+  }
+}
+
+# Neural Query w. Filtering
+GET /anime_v1/_search
+{
+  "_source": {
+    "excludes": [
+      "synopsis_embedding"
+    ],
+    "includes": ["title", "title_en", "mean"]
+  },
+  "query": {
+    "neural": {
+      "synopsis_embedding": {
+        "query_text": "Main character starts weak and gets stronger",
+        "k": 10,
+        "filter": {
+          "bool": {
+            "must": [
+              {
+                "range": {
+                  "mean": {
+                    "gte": 6
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}
