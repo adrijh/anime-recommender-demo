@@ -97,18 +97,3 @@ resource "aws_instance" "ec2_instance" {
     Name = "${local.app_name}-bastion"
   }
 }
-
-# resource "aws_instance" "ec2_instance" {
-#   ami           = data.aws_ami.amazon_linux_2_ssm.id
-#   instance_type = "t4g.nano"
-#   subnet_id     = data.aws_subnets.public.ids[0]
-#   vpc_security_group_ids = [
-#     aws_security_group.bastion.id,
-#     aws_security_group.opensearch_user.id,
-#   ]
-#   iam_instance_profile = aws_iam_instance_profile.ec2_instance_profile.name
-#
-#   tags = {
-#     Name = "anime-recommender-bastion"
-#   }
-# }
